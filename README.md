@@ -2,3 +2,37 @@
 ## Picroft Respeaker 2 HAT LED Effects 
 >Python files to make LED effects on Respeaker 2 HAT from SeedStudio. Forked from [here](https://github.com/respeaker/mic_hat)
 
+## Run as a service.
+> Find out the path to `python` bin folder inside the virtual env., use command `echo $VIRTUAL_ENV`, in my case it is `/home/pi/mycroft-core/.venv/`
+
+Create a file `pixels.service` inside `/etc/systemd/system/`
+
+```shell
+$ sudo touch /etc/systemd/system/pixels.service
+$ sudo nano /etc/systemd/system/pixels.service
+```
+
+and paste the following contents, make sure to change the `Working Directory` and path.
+
+```shell
+[Unit]
+Description=Respeaker HAT pixels service
+After=multi-user.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/pi/Picroft-Respeaker-2-HAT-LED-Effects
+ExecStart=/home/pi/mycroft-core/.venv/bin/python pixels.py
+Restart=always
+[Install]
+WantedBy=multi-user.target
+```
+
+Now you need to enable the service,
+
+```
+$ sudo systemctl daemon-reload
+$ sudo systemctl start pixels
+$ sudo systemctl enable pixels
+```
+
