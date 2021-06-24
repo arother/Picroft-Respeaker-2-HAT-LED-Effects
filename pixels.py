@@ -33,6 +33,7 @@ if __name__ == '__main__':
     pixels.think()
     client.on('mycroft.ready',m_ready)
     client.on('recognizer_loop:wakeword', wakeword_dtected)
+    client.on('recognizer_loop:record_begin', wakeword_dtected)
     client.on('recognizer_loop:record_end',record_end)
     client.on('recognizer_loop:audio_output_start',audio_output_start)
     client.on('recognizer_loop:audio_output_end',m_ready)
